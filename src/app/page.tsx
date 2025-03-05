@@ -5,13 +5,12 @@ import {useEffect} from 'react';
 export default function Home() {
 
     const url_redirect = 'https://concung.com/sua-bot/spdd-c-thuc-icreo-learning-milk-820g-70077.html';
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            window.location.href = url_redirect;
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, []);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         window.location.href = url_redirect;
+    //     }, 2000);
+    //     return () => clearTimeout(timer);
+    // }, []);
 
     return (
         <div
