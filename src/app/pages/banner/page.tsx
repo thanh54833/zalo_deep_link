@@ -1,6 +1,6 @@
 export default function Banner() {
     return (
-        <div className="h-full flex flex-col bg-white flex-1">
+        <div className="h-screen flex flex-col bg-white flex-1">
             <div className="h-[50px] w-[50px] bg-white absolute"></div>
             <div id="iframe" className="h-full w-full flex-1">
                 <iframe
