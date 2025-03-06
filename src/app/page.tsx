@@ -7,10 +7,11 @@ export default function Home() {
     const url_redirect = 'https://concung.com/sua-bot/spdd-c-thuc-icreo-learning-milk-820g-70077.html'
 
     useEffect(() => {
+        if (navigator.userAgent.match(/(Zalo)/)) {
+            window.location.href = url_redirect
+        }
         const timer = setTimeout(() => {
-            if (navigator.userAgent.match(/(Zalo)/)) {
-                window.location.href = url_redirect_fallback
-            }
+            window.location.href = url_redirect_fallback
         }, 100);
         return () => clearTimeout(timer);
     }, []);
@@ -27,7 +28,6 @@ export default function Home() {
                 <div
                     id={"redirect_id"}
                     onClick={() => {
-                        //window.location.assign(url_redirect);
                         window.location.href = url_redirect
                     }}
                     className={"w-[300px] h-[60px] bg-white rounded-[8px] text-black flex items-center justify-center font-bold"}>
