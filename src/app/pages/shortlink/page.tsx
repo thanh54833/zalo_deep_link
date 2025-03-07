@@ -11,9 +11,11 @@ export default function Banner() {
         // if (navigator.userAgent.match(/(Zalo)/)) {
         //     window.location.href = url_redirect
         // }
+
         const timer = setTimeout(() => {
             window.location.href = url_redirect_fallback
         }, 100);
+
         return () => clearTimeout(timer);
     }, []);
 
@@ -42,11 +44,7 @@ export default function Banner() {
                 </div>
             </div>
             <div id="iframe" className="h-full w-full flex-1">
-                <iframe
-                    src="http://10.10.11.88:3000/sua-bot_spdd-c-thuc-icreo-learning-milk-820g-70077.html"
-                    className="w-full h-full"
-                    frameBorder="0"
-                />
+                {/*    Input url and button enter */}
             </div>
         </div>
     );
