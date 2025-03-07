@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   nextjs:
+    container_name: deep_link_web
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -15,8 +16,3 @@ services:
       - HOST=0.0.0.0
     command: npm run dev
     restart: unless-stopped
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:3000" ]
-      interval: 30s
-      timeout: 10s
-      retries: 3
