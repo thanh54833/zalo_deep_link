@@ -35,6 +35,8 @@ const Banner: React.FC = () => {
     }, [url]);
 
     const get_url_fallback = (url_cookie: string): string => {
+
+
         return url_cookie ? custom_url_schema + url_cookie.replace("https://", "") : "";
     };
 
