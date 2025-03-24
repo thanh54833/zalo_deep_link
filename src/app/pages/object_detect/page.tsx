@@ -49,17 +49,19 @@ export default function ObjectDetect() {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center p-4 bg-blue-400">
+
             <div className={"h-[350px] mb-4"}>
                 {capturedImage && (
                     <div>
-                        <h3 className="text-lg font-bold mb-2">Captured Image:</h3>
                         <img src={capturedImage} alt="Captured" className="border border-gray-300 rounded"
                              style={{height: '400px'}}/>
                     </div>
                 )}
             </div>
+
             <input type="file" accept="image/*" onChange={handleFileChange}
-                   className="mt-[10px] mb-4 border rounded p-2"/>
+                   className="mt-[40px] mb-4 border rounded p-2"/>
+
             {results.length > 0 && (
                 <div>
                     <h3 className="text-lg font-bold mb-2 flex flex-row">
