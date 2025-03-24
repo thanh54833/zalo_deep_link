@@ -29,7 +29,9 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch('http://10.10.11.88:8000/detect_objects/', {
+            // http://10.10.11.88:8000/yolo/detect-and-crop/
+            // http://10.10.11.88:8000/detect_objects/
+            const response = await fetch('http://10.10.11.88:8000/yolo/detect-and-crop/', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -53,7 +55,7 @@ export default function ObjectDetect() {
             <div className={"h-[250px] mb-4"}>
                 {capturedImage && (
                     <div>
-                        <img src={capturedImage} alt="Captured" className="border border-gray-300 rounded"
+                        <img src={capturedImage} alt="Captured" className="border border-gray-300 rounded rotate-0"
                              style={{height: '250px'}}/>
                     </div>
                 )}
@@ -72,7 +74,7 @@ export default function ObjectDetect() {
                             <div key={index} className="m-[2px]">
                                 <div className={"text-[10px]"}>{result.score.toFixed(3)}</div>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
-                                     className="border border-gray-300 rounded h-[120px] w-[120px]"/>
+                                     className="border border-gray-300 rounded h-[120px] w-[120px] rotate-0"/>
                             </div>
                         ))}
                     </div>
