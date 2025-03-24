@@ -7,23 +7,22 @@ const Banner: React.FC = () => {
     const [url, setUrl] = useState('');
 
 
-    // http://localhost:3000/pages/shortlink
     useEffect(() => {
-        const primaryUrl = "https://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html";
-        const fallbackUrl = "deeplink://" + primaryUrl.replace("https://", "");
+        //window.location.href = primaryUrl;
 
-
-        window.location.href = primaryUrl;
-        setUrl(primaryUrl);
+        const concungUrl = window.location.href;//"https://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html";
+        const customUrl = "deeplink://" + concungUrl.replace("https://", ""); // deeplink://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html
 
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-        if (isMobile) {
+        const isZalo = navigator.userAgent.includes('Zalo');
+
+        if (isMobile && isZalo) {
             const time = setTimeout(() => {
-                window.location.href = fallbackUrl;
-                setUrl(fallbackUrl);
-            }, 100);
+                window.location.href = customUrl;
+            }, 200);
             return () => clearTimeout(time);
         }
+
     }, []);
 
 
@@ -47,6 +46,7 @@ const Banner: React.FC = () => {
             <div className="bg-pink-200 w-screen h-px"></div>
             <div className="flex-1 flex flex-col items-center justify-center mx-5 bg-blue-200">
                 {url}
+                {navigator.userAgent}
             </div>
         </div>
     );
