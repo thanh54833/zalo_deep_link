@@ -62,8 +62,6 @@ export default function ObjectDetect() {
                     <div className="flex flex-row flex-wrap">
                         {results.map((result, index) => (
                             <div key={index} className="mb-4 mr-4">
-                                <p>Label: {result.label}</p>
-                                <p>Score: {result.score}</p>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
                                      className="border border-gray-300 rounded h-[200px] w-[200px]"/>
                             </div>
