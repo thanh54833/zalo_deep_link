@@ -4,7 +4,12 @@ import Cookies from 'js-cookie';
 
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
-    const [results, setResults] = useState<Array<{ label: string, score: number, image: string,duration:string}>>([]);
+    const [results, setResults] = useState<Array<{
+        label: string,
+        score: number,
+        image: string,
+        duration: string
+    }>>([]);
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
     const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,');
@@ -31,12 +36,10 @@ export default function ObjectDetect() {
         setRequestTime(null);
         const formData = new FormData();
         formData.append('file', file);
-        formData.append('excludes', excludeLabel)
-
         const startTime = performance.now();
 
         try {
-            const response = await fetch('http://10.10.11.88:8000/yolo/detect-and-crop/', {
+            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop?excludes=${excludeLabel}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
