@@ -7,7 +7,7 @@ export default function ObjectDetect() {
     const [results, setResults] = useState<Array<{ label: string, score: number, image: string }>>([]);
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
-    const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'personal,');
+    const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,');
 
     useEffect(() => {
         Cookies.set('excludeLabel', excludeLabel);
@@ -36,7 +36,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch('http://192.168.111.119:8000/yolo/detect-and-crop/', {
+            const response = await fetch('http://10.10.11.88:8000/yolo/detect-and-crop/', {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -52,6 +52,10 @@ export default function ObjectDetect() {
             const endTime = performance.now();
             setRequestTime(endTime - startTime);
         }
+    };
+
+    const handleSaveClick = () => {
+        Cookies.set('excludeLabel', excludeLabel);
     };
 
     return (
@@ -76,11 +80,12 @@ export default function ObjectDetect() {
                     placeholder="Exclude Label"
                 />
                 <div
-                    className={"w-[150px] bg-blue-700 ml-[10px] font-bold justify-center items-center flex flex-col rounded-[5px] px-[10px]  "}>
+                    className={"w-[150px] bg-blue-700 ml-[10px] font-bold justify-center items-center flex flex-col rounded-[5px] px-[10px]"}
+                    onClick={handleSaveClick}
+                >
                     Save
                 </div>
             </div>
-
 
             <input type="file" accept="image/*" onChange={handleFileChange}
                    className="w-screen mx-5 mb-4 rounded-[10px] p-2 text-white bg-blue-700" title="Choose File"/>
