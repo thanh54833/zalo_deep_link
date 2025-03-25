@@ -1,5 +1,5 @@
 "use client";
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 
 export default function ObjectDetect() {
@@ -68,10 +68,15 @@ export default function ObjectDetect() {
             <div className={"w-screen font-bold"}><p>Excludes:</p></div>
 
             <div className={"w-screen flex flex-row mb-[4px] "}>
-                <input type="text" value={excludeLabel} onChange={(e) => setExcludeLabel(e.target.value)}
-                       className="w-screen  rounded-[10px] p-2 text-black bg-white"
-                       placeholder="Exclude Label"/>
-                <div className={"bg-white ml-[10px] justify-center items-center flex flex-col rounded-[5px]"}>
+                <input
+                    type="text"
+                    value={excludeLabel}
+                    onChange={(e) => setExcludeLabel(e.target.value)}
+                    className="w-screen rounded-[10px] p-2 text-black bg-white"
+                    placeholder="Exclude Label"
+                />
+                <div
+                    className={"w-[150px] bg-blue-700 ml-[10px] font-bold justify-center items-center flex flex-col rounded-[5px] px-[10px]  "}>
                     Save
                 </div>
             </div>
