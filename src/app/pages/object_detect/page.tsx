@@ -6,6 +6,7 @@ export default function ObjectDetect() {
     const [results, setResults] = useState<Array<{ label: string, score: number, image: string }>>([]);
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
+    const [excludeLabel, setExcludeLabel] = useState<string>('personal,');
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -25,12 +26,11 @@ export default function ObjectDetect() {
         setRequestTime(null);
         const formData = new FormData();
         formData.append('file', file);
+        excludeLabel.split(',').forEach(label => formData.append('excludes', label));
 
         const startTime = performance.now();
 
         try {
-            // http://10.10.11.88:8000/yolo/detect-and-crop/
-            // http://10.10.11.88:8000/detect_objects/
             const response = await fetch('http://192.168.111.119:8000/yolo/detect-and-crop/', {
                 method: 'POST',
                 headers: {
@@ -60,8 +60,11 @@ export default function ObjectDetect() {
                 )}
             </div>
 
+            <input type="text" value={excludeLabel} onChange={(e) => setExcludeLabel(e.target.value)}
+                   className="w-screen mx-5 mb-[4px] rounded-[10px] p-2 text-black bg-white"
+                   placeholder="Exclude Label"/>
             <input type="file" accept="image/*" onChange={handleFileChange}
-                   className="mb-4  rounded-[25px] p-2 text-white bg-blue-700" title="Choose File"/>
+                   className="w-screen mx-5 mb-4 rounded-[10px] p-2 text-white bg-blue-700" title="Choose File"/>
 
             {results.length > 0 && (
                 <div>
@@ -71,9 +74,9 @@ export default function ObjectDetect() {
                     <div className="flex flex-row flex-wrap">
                         {results.map((result, index) => (
                             <div key={index} className="m-[2px]">
-                                <div className={"text-[10px]"}>{result.score.toFixed(3)}</div>
+                                <div className={"text-[10px]"}>{result.label} {result.score.toFixed(3)}</div>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
-                                     className="border border-gray-300 rounded  w-[120px] rotate-0"/>
+                                     className="border border-gray-300 rounded w-[120px] rotate-0"/>
                             </div>
                         ))}
                     </div>
