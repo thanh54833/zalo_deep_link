@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
-    const [results, setResults] = useState<Array<{ label: string, score: number, image: string }>>([]);
+    const [results, setResults] = useState<Array<{ label: string, score: number, image: string,duration:string}>>([]);
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
     const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,');
@@ -31,7 +31,7 @@ export default function ObjectDetect() {
         setRequestTime(null);
         const formData = new FormData();
         formData.append('file', file);
-        excludeLabel.split(',').forEach(label => formData.append('excludes', label));
+        formData.append('excludes', excludeLabel)
 
         const startTime = performance.now();
 
@@ -93,7 +93,7 @@ export default function ObjectDetect() {
             {results.length > 0 && (
                 <div>
                     <h3 className="text-lg font-bold mb-2 flex flex-row">
-                        Results: {requestTime !== null ? `${requestTime.toFixed(2)} ms` : ''}
+                        Results: {requestTime !== null ? `${results[0].duration} ms` : ''}
                     </h3>
                     <div className="flex flex-row flex-wrap">
                         {results.map((result, index) => (
