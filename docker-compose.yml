@@ -16,3 +16,4 @@ services:
       - HOST=0.0.0.0
     command: npm run dev
     restart: unless-stopped
+
