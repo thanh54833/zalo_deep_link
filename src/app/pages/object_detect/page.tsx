@@ -59,8 +59,10 @@ export default function ObjectDetect() {
                     </div>
                 )}
             </div>
+
             <input type="file" accept="image/*" onChange={handleFileChange}
-                   className="mb-4 border rounded p-2"/>
+                   className="mb-4 border rounded p-2" title="Choose File"/>
+
             {results.length > 0 && (
                 <div>
                     <h3 className="text-lg font-bold mb-2 flex flex-row">
