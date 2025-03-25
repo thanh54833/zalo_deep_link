@@ -1,12 +1,17 @@
 "use client";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import Cookies from 'js-cookie';
 
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [results, setResults] = useState<Array<{ label: string, score: number, image: string }>>([]);
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
-    const [excludeLabel, setExcludeLabel] = useState<string>('personal,');
+    const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'personal,');
+
+    useEffect(() => {
+        Cookies.set('excludeLabel', excludeLabel);
+    }, [excludeLabel]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -60,9 +65,18 @@ export default function ObjectDetect() {
                 )}
             </div>
 
-            <input type="text" value={excludeLabel} onChange={(e) => setExcludeLabel(e.target.value)}
-                   className="w-screen mx-5 mb-[4px] rounded-[10px] p-2 text-black bg-white"
-                   placeholder="Exclude Label"/>
+            <div className={"w-screen font-bold"}><p>Excludes:</p></div>
+
+            <div className={"w-screen flex flex-row mb-[4px] "}>
+                <input type="text" value={excludeLabel} onChange={(e) => setExcludeLabel(e.target.value)}
+                       className="w-screen  rounded-[10px] p-2 text-black bg-white"
+                       placeholder="Exclude Label"/>
+                <div className={"bg-white ml-[10px] justify-center items-center flex flex-col rounded-[5px]"}>
+                    Save
+                </div>
+            </div>
+
+
             <input type="file" accept="image/*" onChange={handleFileChange}
                    className="w-screen mx-5 mb-4 rounded-[10px] p-2 text-white bg-blue-700" title="Choose File"/>
 
