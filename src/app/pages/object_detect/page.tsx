@@ -51,7 +51,6 @@ export default function ObjectDetect() {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center p-[5px] bg-blue-400">
-
             <div className={"h-[250px] mb-4"}>
                 {capturedImage && (
                     <div>
@@ -60,10 +59,8 @@ export default function ObjectDetect() {
                     </div>
                 )}
             </div>
-
             <input type="file" accept="image/*" onChange={handleFileChange}
                    className="mb-4 border rounded p-2"/>
-
             {results.length > 0 && (
                 <div>
                     <h3 className="text-lg font-bold mb-2 flex flex-row">
@@ -74,7 +71,7 @@ export default function ObjectDetect() {
                             <div key={index} className="m-[2px]">
                                 <div className={"text-[10px]"}>{result.score.toFixed(3)}</div>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
-                                     className="border border-gray-300 rounded h-[120px] w-[120px] rotate-0"/>
+                                     className="border border-gray-300 rounded  w-[120px] rotate-0"/>
                             </div>
                         ))}
                     </div>
