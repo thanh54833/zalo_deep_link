@@ -2,8 +2,14 @@
 import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 
+enum Model {
+    YOLOV11N = 'yolo11n',
+    YOLOV11X = 'yolo11x',
+}
+
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
+    const [model, setModel] = useState(Model.YOLOV11N);
     const [results, setResults] = useState<Array<{
         label: string,
         score: number,
@@ -39,7 +45,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch(`http://10.10.11.209:8102/yolo/detect-and-crop?excludes=${excludeLabel}`, {
+            const response = await fetch(`http://192.168.111.119:8102/yolo/detect-and-crop?excludes=${excludeLabel}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -63,6 +69,8 @@ export default function ObjectDetect() {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center p-[5px] bg-blue-400">
+            <div className={"bg-blue-700 px-[10px] py-[5px] rounded-[10px] text-[12px]"}>Model:<strong>{model}</strong>
+            </div>
             <div className={"h-[250px] mb-4"}>
                 {capturedImage && (
                     <div>
@@ -71,9 +79,7 @@ export default function ObjectDetect() {
                     </div>
                 )}
             </div>
-
             <div className={"w-screen font-bold"}><p>Excludes:</p></div>
-
             <div className={"w-screen flex flex-row mb-[4px] "}>
                 <input
                     type="text"
