@@ -49,7 +49,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch(`http://10.10.11.209:8102/yolo/detect-and-crop?excludes=${excludeLabel)}&model=${model}`, {
+            const response = await fetch(`http://10.10.11.209:8102/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
