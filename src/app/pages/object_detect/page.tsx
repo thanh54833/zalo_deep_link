@@ -9,7 +9,7 @@ enum Model {
 
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
-    const [model, setModel] = useState(Model.YOLOV11N);
+    const [model, setModel] = useState<Model>(Cookies.get('model') as Model || Model.YOLOV11N);
     const [results, setResults] = useState<Array<{
         label: string,
         score: number,
@@ -23,6 +23,10 @@ export default function ObjectDetect() {
     useEffect(() => {
         Cookies.set('excludeLabel', excludeLabel);
     }, [excludeLabel]);
+
+    useEffect(() => {
+        Cookies.set('model', model);
+    }, [model]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -45,7 +49,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch(`http://192.168.111.119:8102/yolo/detect-and-crop?excludes=${excludeLabel}`, {
+            const response = await fetch(`http://192.168.111.119:8102/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -69,7 +73,10 @@ export default function ObjectDetect() {
 
     return (
         <div className="h-screen w-screen flex flex-col items-center p-[5px] bg-blue-400">
-            <div className={"bg-blue-700 px-[10px] py-[5px] rounded-[10px] text-[12px]"}>Model:<strong>{model}</strong>
+            <div className={"bg-blue-700 px-[10px] py-[5px] rounded-[10px] text-[12px]"} onClick={() => {
+                const newModel = model === Model.YOLOV11N ? Model.YOLOV11X : Model.YOLOV11N;
+                setModel(newModel);
+            }}>Model:<strong>{model}</strong>
             </div>
             <div className={"h-[250px] mb-4"}>
                 {capturedImage && (
