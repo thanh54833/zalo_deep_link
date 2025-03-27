@@ -50,7 +50,8 @@ export default function ObjectDetect() {
 
         try {
             // http://10.10.11.209:8102
-            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
+            // http://10.10.11.88:8000
+            const response = await fetch(`http://10.10.11.209:8102/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
