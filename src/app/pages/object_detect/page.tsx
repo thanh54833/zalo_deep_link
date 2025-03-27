@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 enum Model {
     YOLOV11N = 'yolo11n',
-    YOLOV11X = 'yolo11x',
+    YOLOV11X = 'yolo11n_pretrained',
 }
 
 export default function ObjectDetect() {
