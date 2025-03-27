@@ -51,7 +51,7 @@ export default function ObjectDetect() {
         try {
             // http://10.10.11.209:8102
             // http://10.10.11.88:8000
-            const response = await fetch(`http://10.10.11.209:8102/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
+            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -116,7 +116,8 @@ export default function ObjectDetect() {
                     <div className="flex flex-row flex-wrap">
                         {results.map((result, index) => (
                             <div key={index} className="m-[2px]">
-                                <div className={"text-[10px]"}>{result.label} {result.score.toFixed(3)}</div>
+                                {/*{result.score.toFixed(3)*/}
+                                <div className={"text-[10px]"}>{result.label} {result.score}</div>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
                                      className="border border-gray-300 rounded w-[120px] rotate-0"/>
                             </div>
