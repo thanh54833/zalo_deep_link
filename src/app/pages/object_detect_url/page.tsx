@@ -9,6 +9,7 @@ enum Model {
 
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
+    const [imageUrl, setImageUrl] = useState<string>('');
     const [model, setModel] = useState<Model>(Cookies.get('model') as Model || Model.YOLOV11N);
     const [results, setResults] = useState<Array<{
         label: string,
@@ -28,41 +29,38 @@ export default function ObjectDetect() {
         Cookies.set('model', model);
     }, [model]);
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const imageData = reader.result as string;
-                setCapturedImage(imageData);
-                sendImageToAPI(file);
-            };
-            reader.readAsDataURL(file);
+
+
+    const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setImageUrl(event.target.value);
+    };
+
+    const handleUrlSubmit = () => {
+        if (imageUrl) {
+            setCapturedImage(imageUrl);
+            sendImageUrlToAPI(imageUrl);
         }
     };
 
-    const sendImageToAPI = async (file: File) => {
+
+    const sendImageUrlToAPI = async (url: string) => {
         setError(null);
         setRequestTime(null);
-        const formData = new FormData();
-        formData.append('file', file);
         const startTime = performance.now();
 
         try {
-            // http://10.10.11.209:8102
-            // http://10.10.11.88:8000
-            // http://10.10.11.88:8000
-            const response = await fetch(`http://0.0.0.0:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
+            const response = await fetch(`http://0.0.0.0:8000/yolo/detect-and-crop-url?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
+                    'Content-Type': 'application/json',
                 },
-                body: formData,
+                body: JSON.stringify({ url }),
             });
             const result = await response.json();
             setResults(result); // Assuming the API returns an array of objects
         } catch (error) {
-            console.error('Error sending image to API:', error);
+            console.error('Error sending image URL to API:', error);
             setError('Failed to process the image. Please try again.');
         } finally {
             const endTime = performance.now();
@@ -106,8 +104,21 @@ export default function ObjectDetect() {
                 </div>
             </div>
 
-            <input type="file" accept="image/*" onChange={handleFileChange}
-                   className="w-screen mx-5 mb-4 rounded-[10px] p-2 text-white bg-blue-700" title="Choose File"/>
+            <div className={"w-screen flex flex-row mb-[4px] "}>
+                <input
+                    type="text"
+                    value={imageUrl}
+                    onChange={handleUrlChange}
+                    className="w-screen rounded-[10px] p-2 text-black bg-white"
+                    placeholder="Enter Image URL"
+                />
+                <div
+                    className={"w-[150px] bg-blue-700 ml-[10px] font-bold justify-center items-center flex flex-col rounded-[5px] px-[10px]"}
+                    onClick={handleUrlSubmit}
+                >
+                    Submit
+                </div>
+            </div>
 
             {results.length > 0 && (
                 <div>
@@ -117,7 +128,6 @@ export default function ObjectDetect() {
                     <div className="flex flex-row flex-wrap">
                         {results.map((result, index) => (
                             <div key={index} className="m-[2px]">
-                                {/*{result.score.toFixed(3)*/}
                                 <div className={"text-[10px]"}>{result.label} {result.score}</div>
                                 <img src={`data:image/png;base64,${result.image}`} alt="Result"
                                      className="border border-gray-300 rounded w-[120px] rotate-0"/>
