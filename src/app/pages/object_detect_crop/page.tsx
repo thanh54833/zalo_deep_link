@@ -13,12 +13,15 @@ enum Model {
 export default function ObjectDetect() {
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
     const [model, setModel] = useState<Model>(Object.values(Model)[0]);
+
     const [results, setResults] = useState<Array<{
         label: string,
         score: number,
         image: string,
-        duration: string
+        duration: string,
+        box: [number, number, number, number]
     }>>([]);
+
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
     const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,');
@@ -137,8 +140,18 @@ export default function ObjectDetect() {
                         {results.map((result, index) => (
                             <div key={index} className="m-[2px]">
                                 <div className={"text-[10px]"}>{result.label} {result.score}</div>
-                                <img src={`data:image/png;base64,${result.image}`} alt="Result"
-                                     className="border border-gray-300 rounded w-[120px] rotate-0"/>
+                                <img
+                                    src={`data:image/png;base64,${result.image}`}
+                                    alt="Result"
+                                    className="border border-gray-300 rounded rotate-0"
+                                    style={{
+                                        position: 'absolute',
+                                        left: `${result.box[0]}px`,
+                                        top: `${result.box[1]}px`,
+                                        width: `${result.box[2] - result.box[0]}px`,
+                                        height: `${result.box[3] - result.box[1]}px`
+                                    }}
+                                />
                             </div>
                         ))}
                     </div>
