@@ -30,7 +30,6 @@ export default function ObjectDetect() {
     }, [model]);
 
 
-
     const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setImageUrl(event.target.value);
     };
@@ -49,13 +48,13 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch(`http://0.0.0.0:8000/yolo/detect-and-crop-url?excludes=${excludeLabel}&model=${model}`, {
+            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop-url?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ url }),
+                body: JSON.stringify({url}),
             });
             const result = await response.json();
             setResults(result); // Assuming the API returns an array of objects

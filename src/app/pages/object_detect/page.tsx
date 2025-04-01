@@ -2,9 +2,21 @@
 import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 
+//
+// mapping = {
+//     "yolo11n": {"model": model_yolo11n},
+//     "yolo11s": {"model": model_yolo11s},
+//     "yolo11m": {"model": model_yolo11m},
+//     "yolo11l": {"model": model_yolo11l},
+//     "yolo11x": {"model": model_yolo11x},
+// }
+
 enum Model {
     YOLOV11N = 'yolo11n',
-    YOLOV11X = 'yolo11n_pretrained',
+    YOLOV11S = 'yolo11s',
+    YOLOV11M = 'yolo11m',
+    YOLOV11L = 'yolo11l',
+    YOLOV11X = 'yolo11x',
 }
 
 export default function ObjectDetect() {
@@ -49,10 +61,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            // http://10.10.11.209:8102
-            // http://10.10.11.88:8000
-            // http://10.10.11.88:8000
-            const response = await fetch(`http://0.0.0.0:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
+            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -77,8 +86,15 @@ export default function ObjectDetect() {
     return (
         <div className="h-screen w-screen flex flex-col items-center p-[5px] bg-blue-400">
             <div className={"bg-blue-700 px-[10px] py-[5px] rounded-[10px] text-[12px]"} onClick={() => {
-                const newModel = model === Model.YOLOV11N ? Model.YOLOV11X : Model.YOLOV11N;
-                setModel(newModel);
+                if (model === Model.YOLOV11N) {
+                    setModel(Model.YOLOV11S);
+                } else if (model === Model.YOLOV11M) {
+                    setModel(Model.YOLOV11L);
+                } else if (model === Model.YOLOV11L) {
+                    setModel(Model.YOLOV11X);
+                } else {
+                    setModel(Model.YOLOV11L);
+                }
             }}>Model:<strong>{model}</strong>
             </div>
             <div className={"h-[250px] mb-4"}>
