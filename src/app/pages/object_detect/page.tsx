@@ -2,14 +2,6 @@
 import {useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 
-//
-// mapping = {
-//     "yolo11n": {"model": model_yolo11n},
-//     "yolo11s": {"model": model_yolo11s},
-//     "yolo11m": {"model": model_yolo11m},
-//     "yolo11l": {"model": model_yolo11l},
-//     "yolo11x": {"model": model_yolo11x},
-// }
 
 enum Model {
     YOLOV11N = 'yolo11n',
@@ -88,12 +80,14 @@ export default function ObjectDetect() {
             <div className={"bg-blue-700 px-[10px] py-[5px] rounded-[10px] text-[12px]"} onClick={() => {
                 if (model === Model.YOLOV11N) {
                     setModel(Model.YOLOV11S);
+                } else if (model === Model.YOLOV11S) {
+                    setModel(Model.YOLOV11M);
                 } else if (model === Model.YOLOV11M) {
                     setModel(Model.YOLOV11L);
                 } else if (model === Model.YOLOV11L) {
                     setModel(Model.YOLOV11X);
                 } else {
-                    setModel(Model.YOLOV11L);
+                    setModel(Model.YOLOV11N);
                 }
             }}>Model:<strong>{model}</strong>
             </div>
