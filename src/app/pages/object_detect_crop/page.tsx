@@ -86,7 +86,7 @@ export default function ObjectDetect() {
         while (n--) {
             u8arr[n] = bstr.charCodeAt(n);
         }
-        return new File([u8arr], filename, { type: mime });
+        return new File([u8arr], filename, {type: mime});
     };
 
     return (
