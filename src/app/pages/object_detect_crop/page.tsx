@@ -105,10 +105,13 @@ export default function ObjectDetect() {
             </div>
             <div className={"h-[250px] mb-4"}>
                 {capturedImage && (
-                    <div>
-                        <img src={capturedImage}
-                             alt="Captured" className="border border-gray-300 rounded rotate-0"
-                             style={{height: '250px'}}/>
+                    <div style={{position: 'relative', display: 'inline-block'}}>
+                        <img
+                            src={capturedImage}
+                            alt="Captured"
+                            className="border border-gray-300 rounded rotate-0"
+                            style={{height: '250px'}}
+                        />
                     </div>
                 )}
             </div>
