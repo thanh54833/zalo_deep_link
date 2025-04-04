@@ -58,7 +58,7 @@ export default function ObjectDetect() {
         const startTime = performance.now();
 
         try {
-            const response = await fetch(`http://10.10.11.88:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
+            const response = await fetch(`http://10.10.11.162:8000/yolo/detect-and-crop?excludes=${excludeLabel}&model=${model}`, {
                 method: 'POST',
                 headers: {
                     'accept': 'application/json',
@@ -137,23 +137,26 @@ export default function ObjectDetect() {
                         Results: {requestTime !== null ? `${results[0].duration} ms` : ''}
                     </h3>
                     <div className="flex flex-row flex-wrap">
-                        {results.map((result, index) => (
-                            <div key={index} className="m-[2px]">
-                                <div className={"text-[10px]"}>{result.label} {result.score}</div>
-                                <img
-                                    src={`data:image/png;base64,${result.image}`}
-                                    alt="Result"
-                                    className="border border-gray-300 rounded rotate-0"
-                                    style={{
-                                        position: 'absolute',
-                                        left: `${result.box[0]}px`,
-                                        top: `${result.box[1]}px`,
-                                        width: `${result.box[2] - result.box[0]}px`,
-                                        height: `${result.box[3] - result.box[1]}px`
-                                    }}
-                                />
-                            </div>
-                        ))}
+                        {/*{results.map((result, index) => (*/}
+
+                        {/*))}*/}
+
+
+                        <div className="m-[2px]">
+                            <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
+                            <img
+                                src={`data:image/png;base64,${results[0].image}`}
+                                alt="Result"
+                                className="border border-gray-300 rounded rotate-0"
+                                style={{
+                                    position: 'absolute',
+                                    left: `${results[0].box[0]}px`,
+                                    top: `${results[0].box[1]}px`,
+                                    width: `${results[0].box[2] - results[0].box[0]}px`,
+                                    height: `${results[0].box[3] - results[0].box[1]}px`
+                                }}
+                            />
+                        </div>
                     </div>
                 </div>
             )}
