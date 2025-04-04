@@ -156,11 +156,14 @@ export default function ObjectDetect() {
                                 />
                             </div>
                         ) : (
-                            <img
-                                src={`data:image/png;base64,${results[0].image}`}
-                                alt="Result"
-                                className="w-[400px] h-[600px] border border-gray-300 rounded rotate-0"
-                            />
+                            <div className="m-[2px]">
+                                <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
+                                <img
+                                    src={`data:image/png;base64,${results[0].image}`}
+                                    alt="Result"
+                                    className="w-[400px] h-[600px] border border-gray-300 rounded rotate-0"
+                                />
+                            </div>
                         )}
                     </div>
                 </div>
