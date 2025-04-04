@@ -104,27 +104,17 @@ export default function ObjectDetect() {
                 }
             </div>
             <div className={"h-[250px] mb-4"}>
-                {/*{capturedImage && (*/}
-                {/*    <div style={{position: 'relative', display: 'inline-block'}}>*/}
-                {/*        <img*/}
-                {/*            src={capturedImage}*/}
-                {/*            alt="Captured"*/}
-                {/*            className="border border-gray-300 rounded rotate-0"*/}
-                {/*            style={{height: '250px'}}*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*)}*/}
 
                 {capturedImage && (
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                    <div style={{position: 'relative', display: 'inline-block'}}>
                         <img
                             src={capturedImage}
                             alt="Captured"
                             className="border border-gray-300 rounded rotate-0"
-                            style={{ height: '250px' }}
+                            style={{height: '250px'}}
                         />
 
-                        {results[0] && (
+                        {results[0] && results[0].box && (
                             <div style={{
                                 position: 'absolute',
                                 border: '2px solid rgba(255, 0, 0, 0.8)', // Red border with some transparency
@@ -137,7 +127,7 @@ export default function ObjectDetect() {
                                 boxShadow: 'none', // Remove shadow to keep it inside the image
                                 transition: 'all 0.3s ease', // Smooth transition for hover effects
                                 zIndex: 1, // Ensure the box is above the image
-                            }} />
+                            }}/>
                         )}
                     </div>
                 )}
@@ -168,31 +158,13 @@ export default function ObjectDetect() {
                         Results: {requestTime !== null ? `${results[0].duration} ms` : ''}
                     </h3>
                     <div className="flex flex-row flex-wrap">
-
-                        {results[0].box ? (
-                            <div className="m-[2px]">
-                                <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
-                                <img
-                                    src={`${capturedImage}`}
-                                    alt="Result"
-                                    className=" border border-gray-300 rounded rotate-0"
-                                    style={{
-                                        clipPath: `polygon(${results[0].box[0]}px ${results[0].box[1]}px, ${results[0].box[2]}px ${results[0].box[1]}px, ${results[0].box[2]}px ${results[0].box[3]}px, ${results[0].box[0]}px ${results[0].box[3]}px)`,
-                                        width: 'auto',
-                                        height: 'h-[250px]'
-                                    }}
-                                />
+                        {results.map((result, index) => (
+                            <div key={index} className="m-[2px]">
+                                <div className={"text-[10px]"}>{result.label} {result.score}</div>
+                                <img src={`data:image/png;base64,${result.image}`} alt="Result"
+                                     className="border border-gray-300 rounded w-[120px] rotate-0"/>
                             </div>
-                        ) : (
-                            <div className="m-[2px]">
-                                <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
-                                <img
-                                    src={`data:image/png;base64,${results[0].image}`}
-                                    alt="Result"
-                                    className="w-[400px] h-[600px] border border-gray-300 rounded rotate-0"
-                                />
-                            </div>
-                        )}
+                        ))}
                     </div>
                 </div>
             )}
