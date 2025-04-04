@@ -24,7 +24,7 @@ export default function ObjectDetect() {
 
     const [error, setError] = useState<string | null>(null);
     const [requestTime, setRequestTime] = useState<number | null>(null);
-    const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,');
+    const [excludeLabel, setExcludeLabel] = useState<string>(Cookies.get('excludeLabel') || 'person,refrigerator');
 
     useEffect(() => {
         Cookies.set('excludeLabel', excludeLabel);
@@ -149,7 +149,6 @@ export default function ObjectDetect() {
                                 alt="Result"
                                 className="border border-gray-300 rounded rotate-0"
                                 style={{
-                                    position: 'absolute',
                                     left: `${results[0].box[0]}px`,
                                     top: `${results[0].box[1]}px`,
                                     width: `${results[0].box[2] - results[0].box[0]}px`,
