@@ -138,8 +138,6 @@ export default function ObjectDetect() {
                         Results: {requestTime !== null ? `${results[0].duration} ms` : ''}
                     </h3>
                     <div className="flex flex-row flex-wrap">
-                        {/*{results.map((result, index) => (*/}
-                        {/*))}*/}
 
                         {results[0].box ? (
                             <div className="m-[2px]">
