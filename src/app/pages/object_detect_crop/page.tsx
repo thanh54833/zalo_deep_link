@@ -104,14 +104,41 @@ export default function ObjectDetect() {
                 }
             </div>
             <div className={"h-[250px] mb-4"}>
+                {/*{capturedImage && (*/}
+                {/*    <div style={{position: 'relative', display: 'inline-block'}}>*/}
+                {/*        <img*/}
+                {/*            src={capturedImage}*/}
+                {/*            alt="Captured"*/}
+                {/*            className="border border-gray-300 rounded rotate-0"*/}
+                {/*            style={{height: '250px'}}*/}
+                {/*        />*/}
+                {/*    </div>*/}
+                {/*)}*/}
+
                 {capturedImage && (
-                    <div style={{position: 'relative', display: 'inline-block'}}>
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
                         <img
                             src={capturedImage}
                             alt="Captured"
                             className="border border-gray-300 rounded rotate-0"
-                            style={{height: '250px'}}
+                            style={{ height: '250px' }}
                         />
+
+                        {results[0] && (
+                            <div style={{
+                                position: 'absolute',
+                                border: '2px solid rgba(255, 0, 0, 0.8)', // Red border with some transparency
+                                backgroundColor: 'rgba(255, 0, 0, 0.2)', // Light red background for focus
+                                left: `${results[0].box[0]}px`,
+                                top: `${results[0].box[1]}px`,
+                                width: `${results[0].box[2] - results[0].box[0]}px`,
+                                height: `${results[0].box[3] - results[0].box[1]}px`,
+                                pointerEvents: 'none', // Prevent interaction with the box
+                                boxShadow: 'none', // Remove shadow to keep it inside the image
+                                transition: 'all 0.3s ease', // Smooth transition for hover effects
+                                zIndex: 1, // Ensure the box is above the image
+                            }} />
+                        )}
                     </div>
                 )}
             </div>
