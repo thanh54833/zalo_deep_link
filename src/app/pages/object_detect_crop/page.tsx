@@ -138,24 +138,30 @@ export default function ObjectDetect() {
                     </h3>
                     <div className="flex flex-row flex-wrap">
                         {/*{results.map((result, index) => (*/}
-
                         {/*))}*/}
 
-
-                        <div className="m-[2px]">
-                            <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
+                        {results[0].box ? (
+                            <div className="m-[2px]">
+                                <div className={"text-[10px]"}>{results[0].label} {results[0].score}</div>
+                                <img
+                                    src={`data:image/png;base64,${results[0].image}`}
+                                    alt="Result"
+                                    className="border border-gray-300 rounded rotate-0"
+                                    style={{
+                                        left: `${results[0].box[0]}px`,
+                                        top: `${results[0].box[1]}px`,
+                                        width: `${results[0].box[2] - results[0].box[0]}px`,
+                                        height: `${results[0].box[3] - results[0].box[1]}px`
+                                    }}
+                                />
+                            </div>
+                        ) : (
                             <img
                                 src={`data:image/png;base64,${results[0].image}`}
                                 alt="Result"
-                                className="border border-gray-300 rounded rotate-0"
-                                style={{
-                                    left: `${results[0].box[0]}px`,
-                                    top: `${results[0].box[1]}px`,
-                                    width: `${results[0].box[2] - results[0].box[0]}px`,
-                                    height: `${results[0].box[3] - results[0].box[1]}px`
-                                }}
+                                className="w-[400px] h-[600px] border border-gray-300 rounded rotate-0"
                             />
-                        </div>
+                        )}
                     </div>
                 </div>
             )}
