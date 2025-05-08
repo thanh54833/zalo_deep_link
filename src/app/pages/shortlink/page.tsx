@@ -9,16 +9,20 @@ const Banner: React.FC = () => {
 
     useEffect(() => {
         //window.location.href = primaryUrl;
+        // window.location.href;//
 
-        const concungUrl = window.location.href;//"https://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html";
+        const concungUrl = "https://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html";
         const customUrl = "deeplink://" + concungUrl.replace("https://", ""); // deeplink://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html
 
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         const isZalo = navigator.userAgent.includes('Zalo');
 
+        const intentUrl = 'intent://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html#Intent;scheme=deeplink;package=com.concung.ecapp;S.browser_fallback_url=https://play.google.com/store/apps/details?id=com.concung.ecapp;end'
+
+        //window.location.href = customUrl
         if (isMobile && isZalo) {
             const time = setTimeout(() => {
-                window.location.href = customUrl;
+                window.location.href = customUrl ;//customUrl;
             }, 200);
             return () => clearTimeout(time);
         }
@@ -36,7 +40,11 @@ const Banner: React.FC = () => {
                         <div>Tã Sữa Khuyến Mãi</div>
                     </div>
                     <button
-                        onClick={() => window.location.href = "https://apps.apple.com/vn/app/con-c%C6%B0ng-1-m%E1%BA%B9-v%C3%A0-b%C3%A9/id1442035575?l=vi"}
+                        onClick={() => {
+                            window.location.href = "https://concung.com/sua-tuoi-cac-loai/sua-tuoi-tiet-trung-co-duong-vinamilk-180ml-loc-4-hop-44928.html";
+                            // window.location.href = "https://apps.apple.com/vn/app/con-c%C6%B0ng-1-m%E1%BA%B9-v%C3%A0-b%C3%A9/id1442035575?l=vi"
+
+                        }}
                         className="bg-pink-400 h-8 text-white px-2 rounded-md font-bold ml-auto text-xs"
                     >
                         INSTALL
